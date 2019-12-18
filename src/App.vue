@@ -1,6 +1,6 @@
  <template>
  <div>
-   <!-- 登录组件容器 -->
+   <!-- 一级路由容器：登录组件容器 -->
   <router-view></router-view>
 
  </div>
