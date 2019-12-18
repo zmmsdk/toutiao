@@ -1,32 +1,16 @@
-<template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
-</template>
+ <template>
+ <div>
+   <!-- 登录组件容器 -->
+  <router-view></router-view>
 
-<style lang="less">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+ </div>
+ </template>
 
-#nav {
-  padding: 30px;
+<script>
+import './views/login/login'
+export default {}
+</script>
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+ <style>
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+ </style>
