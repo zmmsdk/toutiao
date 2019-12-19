@@ -15,8 +15,8 @@ import axios from 'axios'
 // 引入数据可视化echarts
 import './../node_modules/echarts/dist/echarts'
 Vue.use(ElementUI)
-// 注册axious
-axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/1.0'// 设置一个常态值：基地址
+// 注册axious：设置基地址
+axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'// 设置一个常态值：基地址
 Vue.prototype.$http = axios // axious赋值给全局对象
 Vue.config.productionTip = false
 

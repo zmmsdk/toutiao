@@ -1,43 +1,41 @@
 <template>
-
-    <div class='login'>
-      <!-- 使用elementUI组件 el-card -->
-     <el-card class="login-card">
-         <!-- 匿名插槽 -->
-         <div  class='title'>
-             <img src="../../assets/img/logo_index.png" alt="">
-         </div>
-         <!-- 表单 => el-form包裹 -->
-         <!-- 数据校验 => el-form绑定 model ,绑定rules规则  ref可以作用在div上如果ref作用在组件标签上 代表的是组件的实例-->
-         <el-form ref="myForm" :model="loginForm" :rules="loginRules" style="margin-top:20px">
-             <!-- 每一个表单域由一个 Form-Item 组件构成 -->
-             <!-- form-item  prop属性 绑定 下面表单组件的 字段名 -->
-             <el-form-item prop="mobile">
-                 <!-- 表单域中可以放置各种类型的表单控件，包括 Input、Select、Checkbox、Radio、Switch、DatePicker、TimePicker -->
-                 <!-- 手机号 绑定 v-model -->
-                 <el-input v-model="loginForm.mobile" placeholder="请输入手机号"></el-input>
-             </el-form-item>
-             <el-form-item prop="code">
-                 <!-- 验证码 -->
-                 <el-input v-model="loginForm.code" placeholder="请输入验证码" style="width:65%"></el-input>
-                 <!-- 发送验证码 -->
-                 <el-button  style="float:right">发送验证码</el-button>
-             </el-form-item>
-             <el-form-item prop="agree">
-                 <!-- 同意选项 -->
-                 <el-checkbox v-model="loginForm.agree">我已阅读并同意用户协议和隐私条款</el-checkbox>
-             </el-form-item>
-              <el-form-item>
-                  <!-- 登录按钮 -->
-                  <!-- 注册点击事件 -->
-                  <el-button @click="login"  type="primary" style="width:100%">登录</el-button>
-              </el-form-item>
-         </el-form>
-     </el-card>
+  <div class="login">
+    <!-- 使用elementUI组件 el-card -->
+    <el-card class="login-card">
+      <!-- 匿名插槽 -->
+      <div class="title">
+        <img src="../../assets/img/logo_index.png" alt />
+      </div>
+      <!-- 表单 => el-form包裹 -->
+      <!-- 数据校验 => el-form绑定 model ,绑定rules规则  ref可以作用在div上如果ref作用在组件标签上 代表的是组件的实例-->
+      <el-form ref="myForm" :model="loginForm" :rules="loginRules" style="margin-top:20px">
+        <!-- 每一个表单域由一个 Form-Item 组件构成 -->
+        <!-- form-item  prop属性 绑定 下面表单组件的 字段名 -->
+        <el-form-item prop="mobile">
+          <!-- 表单域中可以放置各种类型的表单控件，包括 Input、Select、Checkbox、Radio、Switch、DatePicker、TimePicker -->
+          <!-- 手机号 绑定 v-model -->
+          <el-input v-model="loginForm.mobile" placeholder="请输入手机号"></el-input>
+        </el-form-item>
+        <el-form-item prop="code">
+          <!-- 验证码 -->
+          <el-input v-model="loginForm.code" placeholder="请输入验证码" style="width:65%"></el-input>
+          <!-- 发送验证码 -->
+          <el-button style="float:right">发送验证码</el-button>
+        </el-form-item>
+        <el-form-item prop="agree">
+          <!-- 同意选项 -->
+          <el-checkbox v-model="loginForm.agree">我已阅读并同意用户协议和隐私条款</el-checkbox>
+        </el-form-item>
+        <el-form-item>
+          <!-- 登录按钮 -->
+          <!-- 注册点击事件 -->
+          <el-button @click="login" type="primary" style="width:100%">登录</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
   </div>
-    <!-- 456 -->
-    <!-- <router-view>456</router-view> -->
-
+  <!-- 456 -->
+  <!-- <router-view>456</router-view> -->
 </template>
 
 <script>
@@ -82,34 +80,51 @@ export default {
     login () {
       // 校验整个表单的规则
       // validate 是一个方法 => 方法中传入的一个函数 两个校验参数  是否校验成功/未校验成功的字段
-      this.$refs.myForm.validate(function (isOK) {
+      this.$refs.myForm.validate((isOK) => {
         if (isOK) {
           console.log('校验成功')
           alert('登录成功')
+          this.$http({
+            url: '/authorizations',
+            method: 'post',
+            data: this.loginForm
+          }).then(result => {
+            console.log(result.data.data.token)
+            // 放到前端的缓存中
+            window.localStorage.setItem('user-token', result.data.data.token)
+            // 编程式导航
+            this.$router.push('/home') // 登录成功 跳转到home页
+          }).catch(() => {
+            this.$message({
+              message: '手机号或者验证码错误',
+              type: 'warning'
+            })
+          })
         }
       })
     }
   }
+
 }
 </script>
 
 <style lang='less' scoped>
 .login {
-    background-image: url('../../assets/img/login_bg.jpg');
-    height: 100vh;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-   .login-card {
-       width:440px;
-       height:340px;
-       .title {
-           text-align: center;
-           img {
-               height:45px;
-           }
-       }
-   }
+  background-image: url("../../assets/img/login_bg.jpg");
+  height: 100vh;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .login-card {
+    width: 440px;
+    height: 340px;
+    .title {
+      text-align: center;
+      img {
+        height: 45px;
+      }
+    }
+  }
 }
 </style>
