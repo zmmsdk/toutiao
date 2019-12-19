@@ -8,7 +8,7 @@
              <img src="../../assets/img/logo_index.png" alt="">
          </div>
          <!-- 表单 => el-form包裹 -->
-         <!-- 数据校验 => el-form绑定 model ,绑定rules规则 -->
+         <!-- 数据校验 => el-form绑定 model ,绑定rules规则  ref可以作用在div上如果ref作用在组件标签上 代表的是组件的实例-->
          <el-form ref="myForm" :model="loginForm" :rules="loginRules" style="margin-top:20px">
              <!-- 每一个表单域由一个 Form-Item 组件构成 -->
              <!-- form-item  prop属性 绑定 下面表单组件的 字段名 -->
@@ -43,6 +43,7 @@
 <script>
 export default {
   data () {
+    // 自定义函数
     let validator = function (rule, value, callBack) {
       // rule当前规则
       // value当前表单项的值
@@ -71,6 +72,7 @@ export default {
           { pattern: /^1[3456789]\d{9}$/, message: '请输入合法的手机号' }],
         code: [{ required: true, message: '请输入您的验证码' },
           { pattern: /^\d{6}$/, message: '验证码为6位数字' }],
+        // 自定义函数:3个参数
         agree: [{ validator }]
       } // 登录规则集合对象
       // 自定义形式去校验
