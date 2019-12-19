@@ -11,7 +11,8 @@
       <!-- 中部区域 -->
       <el-main>
         <!-- 二级路由容器 -->
-        <index-page></index-page>
+        <!-- <index-page></index-page> -->
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -21,7 +22,7 @@
 <script>
 import appHeader from './../../components/common/app-header.vue'
 import appSlider from './../../components/common/app-aside.vue'
-import indexpage from './../../components/main-page/index-page.vue'
+// import indexpage from './../../components/main-page/index-page.vue'
 export default {
   name: 'app',
   data () {
@@ -29,8 +30,8 @@ export default {
   },
   components: {
     'app-header': appHeader,
-    'app-slider': appSlider,
-    'index-page': indexpage
+    'app-slider': appSlider
+    // 'index-page': indexpage
   }
 }
 

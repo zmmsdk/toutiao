@@ -5,12 +5,22 @@ import VueRouter from 'vue-router'
 import home from '../views/Home/index.vue'
 import login from '../views/login/login.vue'
 
+// 导入文章发布组件
+import publish from './../components/main-page/index-publish.vue'
+
+import indexpage from './../components/main-page/index-page.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/login', component: login },
   // 注册home组件和login组件
-  { path: '/home', component: home },
+  { path: '/home',
+    component: home,
+    children: [
+      { path: '', component: indexpage },
+      { path: 'publish', component: publish }
+    ] },
   { path: '/login', component: login }
   // {
   //   path: '/about',
