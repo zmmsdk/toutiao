@@ -4,7 +4,8 @@
         <img src="../../assets/img/logo_admin.png" alt="">
     </div>
     <!-- 左侧导航组件 -->
-    <el-menu background-color="#353b4e" text-color="#adafb5" active-text-color="#ffd04b">
+    <!-- 左侧导航组件  开启路由 :router="true" 或者 router-->
+      <el-menu  router background-color="#353b4e" text-color="#adafb5" active-text-color="#ffd04b">
         <!-- 没有折叠选项 -->
         <el-menu-item index="/home">首页</el-menu-item>
           <!-- 二级折叠菜单 -->
