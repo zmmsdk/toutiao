@@ -20,17 +20,17 @@
 </template>
 
 <script>
-import appHeader from './../../components/common/app-header.vue'
-import appSlider from './../../components/common/app-aside.vue'
-// import indexpage from './../../components/main-page/index-page.vue'
+// import appHeader from './../../components/common/app-header.vue'
+// import appSlider from './../../components/common/app-aside.vue'
+
 export default {
   name: 'app',
   data () {
     return {}
   },
   components: {
-    'app-header': appHeader,
-    'app-slider': appSlider
+    // 'app-header': appHeader,
+    // 'app-slider': appSlider
     // 'index-page': indexpage
   }
 }

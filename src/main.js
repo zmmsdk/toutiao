@@ -8,6 +8,8 @@ import router from './router'
 import ElementUI from 'element-ui' // 引入UI
 import 'element-ui/lib/theme-chalk/index.css' // 引入样式
 // 注册elementui
+// 引入全局注册插件
+import Component from './components/index'
 
 import './styles/index.less' // 引入样式
 // 引入axious
@@ -15,6 +17,7 @@ import axios from 'axios'
 // 引入数据可视化echarts
 import './../node_modules/echarts/dist/echarts'
 Vue.use(ElementUI)
+Vue.use(Component) // 全局注册
 // 注册axious：设置基地址
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'// 设置一个常态值：基地址
 Vue.prototype.$http = axios // axious赋值给全局对象

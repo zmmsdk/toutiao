@@ -40,12 +40,7 @@ export default {
     }
   },
   methods: {
-    handleOpen (key, keyPath) {
-      console.log(key, keyPath)
-    },
-    handleClose (key, keyPath) {
-      console.log(key, keyPath)
-    }
+
   }
 }
 </script>
@@ -53,7 +48,7 @@ export default {
 <style lang='less' scoped>
 .el-aside{
     width: 200px;
-background-color: #000!important;;
+background-color: #000!important;
 height: 1000px!important;;
 }
  .layout-aside {

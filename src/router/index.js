@@ -18,6 +18,7 @@ const routes = [
   { path: '/home',
     component: home,
     children: [
+      // 为空位默认
       { path: '', component: indexpage },
       { path: 'publish', component: publish }
     ] },
