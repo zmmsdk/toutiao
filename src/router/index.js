@@ -9,6 +9,22 @@ import login from '../views/login/login.vue'
 import publish from './../components/main-page/index-publish.vue'
 
 import indexpage from './../components/main-page/index-page.vue'
+// 导入文章列表组件
+import indexaticles from './../components/main-page/index-aticles.vue'
+
+import indexcomment from './../components/main-page/index-common.vue'
+
+import indexsucai from './../components/main-page/index-sucai.vue'
+
+import fanspicture from './../components/main-page/fans-picture.vue'
+
+import fansinfo from './../components/main-page/fans-info.vue'
+
+import fanshuaxiang from './../components/main-page/fans-huaxiang.vue'
+
+import fanslist from './../components/main-page/fans-list.vue'
+
+import userinfo from './../components/main-page/index-userinfo.vue'
 
 Vue.use(VueRouter)
 
@@ -20,7 +36,16 @@ const routes = [
     children: [
       // 为空位默认
       { path: '', component: indexpage },
-      { path: 'publish', component: publish }
+      { path: 'publish', component: publish },
+      { path: 'articles', component: indexaticles },
+      { path: 'comment', component: indexcomment },
+      { path: 'material', component: indexsucai },
+      { path: 'picture', component: fanspicture },
+      { path: 'fansinfo', component: fansinfo },
+      { path: 'fanspicture', component: fanshuaxiang },
+      { path: 'fanslist', component: fanslist },
+      { path: 'userinfo', component: userinfo }
+
     ] },
   { path: '/login', component: login }
   // {
