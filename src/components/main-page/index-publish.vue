@@ -1,17 +1,24 @@
 <template>
    <el-card v-loading="loading">
-       <bread-crumb slot='header'>
-          <template slot='title'>发布文章</template>
+     <bread-crumb slot='header'>
+
+                <el-breadcrumb separator="/">
+  <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+  <el-breadcrumb-item><a href="/">文章发布</a></el-breadcrumb-item>
+  <!-- <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+  <el-breadcrumb-item>活动详情</el-breadcrumb-item> -->
+</el-breadcrumb>
        </bread-crumb>
+
        <!-- 表单 -->
        <el-form ref="publishForm" :model="formData" :rules="publishRules"  style='margin-left:100px' label-width="100px">
             <el-form-item  prop="title" label="标题">
                 <el-input v-model="formData.title" style='width:400px'></el-input>
             </el-form-item>
             <el-form-item prop="content" label="内容">
-                <quill-editor v-model="formData.content"  style='height:300px'></quill-editor>
+                <quill-editor v-model="formData.content"    ></quill-editor>
             </el-form-item>
-            <el-form-item label="封面"  prop="cover" style='margin-top:120px'>
+            <el-form-item label="封面"  prop="cover" style='margin-top:20px'>
                 <el-radio-group @change="changeType" v-model="formData.cover.type">
                     <el-radio :label="1">单图</el-radio>
                     <el-radio :label="3">三图</el-radio>
@@ -36,7 +43,7 @@
 </template>
 
 <script>
-// import { getChannels } from '../../api/articles'
+import { getChannels } from './../../api/articles'
 export default {
   data () {
     return {
@@ -61,100 +68,80 @@ export default {
         channel_id: [{ required: true, message: '频道不能为空' }]
       } //  发布规则
     }
-  }
-  //   methods: {
+  },
+  methods: {
   //     // 接收子组件传过来得数据 更改images [""] ["","",""] []
-  //     changeImg (url, index) {
-  //       //    this.formData.cover.images[index] = url // 错误
-  //       // Vue 更新原理 this.a = "zhangsan"  this.list[index] =  值 错误的
-  //       // this.formData.cover.images = this.formData.cover.images.map(function (item, i) {
-  //       //   if (index === i) {
-  //       //     // 说明找到了要修改的值吧
-  //       //     return url
-  //       //   }
-  //       //   return item
-  //       // })
-  //       // this.formData.cover.images.splice(index, 1, url) // 直接替换 只适用于字符串数组的情况
-  //       this.formData.cover.images = this.formData.cover.images.map((item, i) => i === index ? url : item)
-  //     },
-  //     // 类型改变事件
-  //     changeType () {
-  //       // 可以获取到最新的type
-  //       // 根据type进行images的长度变化
-  //       if (this.formData.cover.type === 1) {
-  //         this.formData.cover.images = [''] // images长度1
-  //       } else if (this.formData.cover.type === 3) {
-  //         this.formData.cover.images = ['', '', ''] // images长度1
-  //       } else {
-  //         this.formData.cover.images = []
-  //       }
-  //     },
-  //     //   获取频道数据
-  //     async getChannels () {
-  //       let result = await getChannels()
-  //       this.channels = result.data.channels // 获取channels频道
-  //     },
-  //     // 根据文章id获取文章详情
-  //     getArticleById (articleId) {
-  //       this.loading = true
-  //       this.$axios({
-  //         url: `/articles/${articleId}`
-  //       }).then(result => {
-  //         this.formData = result.data
-  //         this.loading = false
-  //       })
-  //     },
-  //     // 发布文章 validate
-  //     publish (draft) {
-  //       this.$refs.publishForm.validate((isOk) => {
-  //         if (isOk) {
-  //           let { articleId } = this.$route.params // 有 articleId就是编辑 没articleId就是新增
-  //           this.$axios({
-  //             url: articleId ? `/articles/${articleId}` : '/articles',
-  //             method: articleId ? 'put' : 'post',
-  //             params: { draft },
-  //             data: this.formData
-  //           }).then(() => {
-  //             // 发布成功了 => 回到内容列表
-  //             this.$router.push('/home/articles')
-  //           })
+    changeImg (url, index) {
+      this.formData.cover.images[index] = url // 错误
+      // Vue 更新原理 this.a = "zhangsan"  this.list[index] =  值 错误的
+      this.formData.cover.images = this.formData.cover.images.map(function (item, i) {
+        if (index === i) {
+          // 说明找到了要修改的值吧
+          return url
+        }
+        return item
+      })
+      this.formData.cover.images.splice(index, 1, url) // 直接替换 只适用于字符串数组的情况
+      this.formData.cover.images = this.formData.cover.images.map((item, i) => i === index ? url : item)
+    },
+    //     // 类型改变事件
+    changeType () {
+      // 可以获取到最新的type
+      // 根据type进行images的长度变化
+      if (this.formData.cover.type === 1) {
+        this.formData.cover.images = [''] // images长度1
+      } else if (this.formData.cover.type === 3) {
+        this.formData.cover.images = ['', '', ''] // images长度1
+      } else {
+        this.formData.cover.images = []
+      }
+    },
+    //   获取频道数据
+    async getChannels () {
+      let result = await getChannels()
+      this.channels = result.data.channels // 获取channels频道
+    },
+    // 根据文章id获取文章详情
+    getArticleById (articleId) {
+      this.loading = true
+      this.$axios({
+        url: `/articles/${articleId}`
+      }).then(result => {
+        this.formData = result.data
+        this.loading = false
+      })
+    }
+  },
 
-//           // 原始代码
-//           // if (articleId) {
-//           //   // 修改
-//           //   this.$axios({
-//           //     url: `/articles/${articleId}`,
-//           //     params: { draft }, // draft为true时 是草稿 为false时 是正式内容
-//           //     method: 'put',
-//           //     data: this.formData
-//           //   }).then(result => {
-//           //     // 发布成功了 => 回到内容列表
-//           //     this.$router.push('/home/articles')
-//           //   })
-//           // } else {
-//           //   this.$axios({
-//           //     url: '/articles',
-//           //     method: 'post',
-//           //     params: { draft }, // draft为true时 是草稿 为false时 是正式内容
-//           //     data: this.formData
-//           //   }).then(() => {
-//           //   // 发布成功了 => 回到内容列表
-//           //     this.$router.push('/home/articles')
-//           //   })
-//           // }
-//         }
-//       })
-//     }
-//   },
-//   created () {
-//     this.getChannels() // 获取频道
-//     // 获取id
-//     let { articleId } = this.$route.params // 有 articleId就是编辑 没articleId就是新增
-//     articleId && this.getArticleById(articleId) // 如果articleId存在才执行后界面的逻辑
-//     // if (articleId) {
-//     //   this.getArticleById(articleId)
-//     // }
-//   }
+  // //     // 发布文章 validate
+  publish (draft) {
+    this.$refs.publishForm.validate((isOk) => {
+      if (isOk) {
+        let { articleId } = this.$route.params // 有 articleId就是编辑 没articleId就是新增
+        this.$axios({
+          url: articleId ? `/articles/${articleId}` : '/articles',
+          method: articleId ? 'put' : 'post',
+          params: { draft },
+          data: this.formData
+
+        })
+          .then(() => {
+          // 发布成功了 => 回到内容列表
+            this.$router.push('/home/articles')
+          })
+      }
+    })
+  },
+
+  created () {
+    this.getChannels() // 获取频道
+    // 获取id
+    let { articleId } = this.$route.params // 有 articleId就是编辑 没articleId就是新增
+    articleId && this.getArticleById(articleId) // 如果articleId存在才执行后界面的逻辑
+    if (articleId) {
+      this.getArticleById(articleId)
+    }
+  }
 }
 </script>
 
