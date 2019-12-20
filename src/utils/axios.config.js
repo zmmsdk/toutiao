@@ -3,7 +3,7 @@ import axios from 'axios'
 import jsonBig from 'json-bigint'
 import { Message } from 'element-ui'
 
-import router from './../permission' // 导入一个实例  为什么不能用this.$router 原来的this指的是vue实例
+import router from '../permission' // 导入一个实例  为什么不能用this.$router 原来的this指的是vue实例
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0' // 将地址的常态值设置给baseUrl
 
 axios.defaults.transformResponse = [function (data) {
