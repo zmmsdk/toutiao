@@ -3,7 +3,7 @@
     <!-- 面包屑组件 -->
     <!-- slot=> header 是给el-card的插槽 -->
     <bread-crumb slot="header">
-      <!-- slot => title是给面包屑的插槽 -->
+      <!-- slot => title是给面包屑的具名插槽 -->
       <template slot="title">评论列表</template>
     </bread-crumb>
     <!-- el-table 表格 data属性是一个对象数组-->
@@ -66,63 +66,65 @@ export default {
     //       this.page.currentPage = newPage // 更新最新页码给 currernpage
     //       this.getComment()
     //     },
-    //     //   获取评论列表
-    //     async getComment () {
-    //       this.loading = true // 显示遮罩
-    //       // this.$axios({
-    //       //   url: '/articles',
-    //       //   params: { response_type: 'comment', page: this.page.currentPage, per_page: this.page.pageSize }
-    //       // }).then(result => {
-    //       //   this.list = result.data.results // 把返回的数据赋值给list
-    //       //   this.page.total = result.data.total_count // 把总条数给 分页组件的总条数
-    //       //   this.loading = false // 关闭遮罩
-    //       // })
-    //       let result = await this.$http({
-    //         url: '/articles',
-    //         params: { response_type: 'comment', page: this.page.currentPage, per_page: this.page.pageSize }
-    //       })
-    //       this.list = result.data.results // 把返回的数据赋值给list
-    //       this.page.total = result.data.total_count // 把总条数给 分页组件的总条数
-    //       this.loading = false // 关闭遮罩
-    //     },
-    //     // filter => return
-    //     stateFormatter (row, column, cellValue, index) {
-    //       return cellValue ? '正常' : '关闭'
-    //     },
-    //     // 打开或者关闭  row 当前行数据
-    //     async closeOrOpen (row) {
-    //       let mess = row.comment_status ? '关闭' : '打开' // 得到打开或者关闭
-    //       // this.$confrm(`您确定要${mess}评论?`).then(() => {
-    //       //   // 确定调用接口
-    //       //   this.$axios({
-    //       //     url: 'comments/status', // 地址
-    //       //     method: 'put',
-    //       //     params: { article_id: row.id.toString() }, // 路径参数
-    //       //     data: { allow_comment: !row.comment_status } // body参数  调用状态和当前状态是反着的 所以取反
-    //       //   }).then(() => {
-    //       //     // 成功之后一定会进入then
-    //       //     this.getComment() // 重新拉取数据
-    //       //   })
-    //       // })
-    //       try {
-    //         //  正常逻辑 如果正常逻辑执行时 报错了 会进入catch 错误信息存在error.message
-    //         await this.$confirm(`您确定要${mess}评论?`)
-    //         await this.$axios({
-    //           url: 'comments/status', // 地址
-    //           method: 'put',
-    //           params: { article_id: row.id.toString() }, // 路径参数
-    //           data: { allow_comment: !row.comment_status } // body参数  调用状态和当前状态是反着的 所以取反
-    //         })
-    //         this.getComment() // 重新拉取数据
-    //       } catch (error) {
+    //   获取评论列表
 
-    //       }
-    //     }
-    //   },
-    //   created () {
-    //     this.getComment() // 获取第一个页 每页十条数据
+    async getComment () {
+      this.loading = true // 显示遮罩
+      this.$axios({
+        url: '/articles',
+        params: { response_type: 'comment', page: this.page.currentPage, per_page: this.page.pageSize }
+      }).then(result => {
+        this.list = result.data.results // 把返回的数据赋值给list
+        this.page.total = result.data.total_count // 把总条数给 分页组件的总条数
+        this.loading = false // 关闭遮罩
+      })
+      let result = await this.$axios({
+        url: '/articles',
+        params: { response_type: 'comment', page: this.page.currentPage, per_page: this.page.pageSize }
+      })
+      this.list = result.data.results // 把返回的数据赋值给list
+      this.page.total = result.data.total_count // 把总条数给 分页组件的总条数
+      this.loading = false // 关闭遮罩
+    },
+    // filter => return
+    stateFormatter (row, column, cellValue, index) {
+      return cellValue ? '正常' : '关闭'
+    },
+    // 打开或者关闭  row 当前行数据
+    async closeOrOpen (row) {
+      let mess = row.comment_status ? '关闭' : '打开' // 得到打开或者关闭
+      this.$confrm(`您确定要${mess}评论?`).then(() => {
+        // 确定调用接口
+        this.$axios({
+          url: 'comments/status', // 地址
+          method: 'put',
+          params: { article_id: row.id.toString() }, // 路径参数
+          data: { allow_comment: !row.comment_status } // body参数  调用状态和当前状态是反着的 所以取反
+        }).then(() => {
+          // 成功之后一定会进入then
+          this.getComment() // 重新拉取数据
+        })
+      })
+      try {
+        //  正常逻辑 如果正常逻辑执行时 报错了 会进入catch 错误信息存在error.message
+        await this.$confirm(`您确定要${mess}评论?`)
+        await this.$axios({
+          url: 'comments/status', // 地址
+          method: 'put',
+          params: { article_id: row.id.toString() }, // 路径参数
+          data: { allow_comment: !row.comment_status } // body参数  调用状态和当前状态是反着的 所以取反
+        })
+        this.getComment() // 重新拉取数据
+      } catch (error) {
+
+      }
+    }
+  },
+  created () {
+    this.getComment() // 获取第一个页 每页十条数据
   }
 }
+
 </script>
 
 <style>

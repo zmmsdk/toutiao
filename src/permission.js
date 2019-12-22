@@ -1,10 +1,6 @@
-// 权限
 import router from './router'
-// import nprogress from 'nprogress' // 引入模块
-// import 'nprogress/nprogress.css' // 引入css
-// 全局前置守卫
+// 全局前置守卫beforeEach,当路由发生改变时  根据当前路径  确定拦截范围  根据有没有token  放行或者登陆页
 // router.beforeEach(function (to, from, next) {
-//   nprogress.start() // 开启进度条
 //   // 判断 拦截的范围
 //   if (to.path.startsWith('/home')) {
 //     // 进入到了拦截范围
@@ -19,11 +15,6 @@ import router from './router'
 //   } else {
 //     next() // 放行
 //   }
-// })
-// // 全局后置守卫
-// router.afterEach(function () {
-//   // 关闭进度条
-//   nprogress.done()
 // })
 // 先导出
 export default router

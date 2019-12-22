@@ -30,6 +30,8 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/login', component: login },
+  // 一级路由组件
+  { path: '/login', component: login },
   // 注册home组件和login组件
   { path: '/home',
     component: home,
@@ -46,8 +48,8 @@ const routes = [
       { path: 'fanslist', component: fanslist },
       { path: 'userinfo', component: userinfo }
 
-    ] },
-  { path: '/login', component: login }
+    ] }
+
   // {
   //   path: '/about',
   //   // name: 'about',
@@ -61,5 +63,28 @@ const routes = [
 const router = new VueRouter({
   routes
 })
+
+// 登录令牌
+// 当路由发生变化时  这个方法里的函数就会执行
+// router.beforeEach(function (to, from, next) {
+//   console.log(to.path)
+//   // 权限拦截  认为有token让过去  没token不让过
+//   //   nprogress.start() // 开启进度条
+//   // 判断 拦截的范围
+//   // startsWith以什么为开头
+//   if (to.path.startsWith('/home')) {
+//     // 进入到了拦截范围
+//     // 判断是否登录 有token 就登录 没token就没登录
+//     let token = window.localStorage.getItem('user-token') // 获取token
+//     if (token) {
+//       // 如果有token  方形
+//       next()
+//     } else {
+//       next('/login') // 没有token 就跳转到登录页
+//     }
+//   } else {
+//     next() // 放行
+//   }
+// })
 
 export default router

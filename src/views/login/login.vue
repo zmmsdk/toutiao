@@ -84,7 +84,7 @@ export default {
         if (isOK) {
           console.log('校验成功')
           alert('登录成功')
-          this.$http({
+          this.axios({
             url: '/authorizations',
             method: 'post',
             data: this.loginForm

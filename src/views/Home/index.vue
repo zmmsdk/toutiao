@@ -10,8 +10,8 @@
       <el-header style="padding:0!important;"> <app-header></app-header></el-header>
       <!-- 中部区域 -->
       <el-main>
-        <!-- 二级路由容器 -->
-        <!-- <index-page></index-page> -->
+        <!-- 一级路由容器 -->
+
         <router-view></router-view>
       </el-main>
     </el-container>

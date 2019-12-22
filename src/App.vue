@@ -7,7 +7,7 @@
  </template>
 
 <script>
-import './views/login/login'
+
 export default {}
 </script>
 
