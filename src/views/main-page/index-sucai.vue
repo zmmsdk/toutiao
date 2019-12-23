@@ -65,72 +65,72 @@ export default {
     }
   },
   methods: {
-    // // 取消或者收藏
-    // collectOrCancel (item) {
-    //   let mess = item.is_collected ? '取消' : ''
-    //   this.$confirm(`您确定要${mess}收藏该图片?`).then(() => {
-    //     this.$axios({
-    //       url: `/user/images/${item.id}`,
-    //       method: 'put',
-    //       data: { collect: !item.is_collected } // 取反 收藏和取消收藏和当前的状态是反着的
-    //     }).then(() => {
-    //       // 收藏或者取消收藏成功  重新拉取数据
-    //       this.getMaterial()
-    //     })
-    //   })
-    // },
-    // // 删除图片
-    // delImg (id) {
-    //   this.$confirm('您确定要删除该图片吗').then(() => {
-    //     // 如果点击了确定
-    //     this.$axios({
-    //       url: `/user/images/${id}`,
-    //       method: 'delete'
-    //     }).then(() => {
-    //       this.getMaterial()
-    //     })
-    //   })
-    // },
-    // //   上传方法
-    // uploadImg (params) {
-    //   const data = new FormData() // 声明一个新的表单
-    //   data.append('image', params.file)
-    //   // 上传文件
-    //   this.$axios({
-    //     url: '/user/images',
-    //     method: 'post',
-    //     data
-    //   }).then(() => {
-    //     this.getMaterial()
-    //   })
-    // },
-    // //   当页码改变时 会传入一个参数
-    // changePage (newPage) {
-    //   this.page.currentPage = newPage // 将最新页码赋值给currentPage
-    //   this.getMaterial() // 获取最新数据
-    // },
-    // // 切换页签方法
-    // changeTab () {
-    //   // 首先要把页码归1
-    //   this.page.currentPage = 1
-    //   this.getMaterial()
-    // },
-    // //   获取素材列表
-    // getMaterial () {
-    //   this.loading = true
-    //   // this.activeName === 'collect' 相当于去找收藏的数据
-    //   // 如果不等于collect 相等于去找全部的数据
-    //   this.$axios({
-    //     url: '/user/images',
-    //     params: { collect: this.activeName === 'collect',
-    //       page: this.page.currentPage,
-    //       per_page: this.page.pageSize }
-    //   }).then(result => {
-    //     this.list = result.data.results
-    //     this.page.total = result.data.total_count // 赋值总数  每次总条数都会重新赋值
-    //     this.loading = false
-    //   })
-    // }
+    // 取消或者收藏
+    collectOrCancel (item) {
+      let mess = item.is_collected ? '取消' : ''
+      this.$confirm(`您确定要${mess}收藏该图片?`).then(() => {
+        this.$axios({
+          url: `/user/images/${item.id}`,
+          method: 'put',
+          data: { collect: !item.is_collected } // 取反 收藏和取消收藏和当前的状态是反着的
+        }).then(() => {
+          // 收藏或者取消收藏成功  重新拉取数据
+          this.getMaterial()
+        })
+      })
+    },
+    // 删除图片
+    delImg (id) {
+      this.$confirm('您确定要删除该图片吗').then(() => {
+        // 如果点击了确定
+        this.$axios({
+          url: `/user/images/${id}`,
+          method: 'delete'
+        }).then(() => {
+          this.getMaterial()
+        })
+      })
+    },
+    //   上传方法
+    uploadImg (params) {
+      const data = new FormData() // 声明一个新的表单
+      data.append('image', params.file)
+      // 上传文件
+      this.$axios({
+        url: '/user/images',
+        method: 'post',
+        data
+      }).then(() => {
+        this.getMaterial()
+      })
+    },
+    //   当页码改变时 会传入一个参数
+    changePage (newPage) {
+      this.page.currentPage = newPage // 将最新页码赋值给currentPage
+      this.getMaterial() // 获取最新数据
+    },
+    // 切换页签方法
+    changeTab () {
+      // 首先要把页码归1
+      this.page.currentPage = 1
+      this.getMaterial()
+    },
+    //   获取素材列表
+    getMaterial () {
+      this.loading = true
+      // this.activeName === 'collect' 相当于去找收藏的数据
+      // 如果不等于collect 相等于去找全部的数据
+      this.$axios({
+        url: '/user/images',
+        params: { collect: this.activeName === 'collect',
+          page: this.page.currentPage,
+          per_page: this.page.pageSize }
+      }).then(result => {
+        this.list = result.data.results
+        this.page.total = result.data.total_count // 赋值总数  每次总条数都会重新赋值
+        this.loading = false
+      })
+    }
   },
   created () {
     this.getMaterial() // 请求数据

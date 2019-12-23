@@ -1,130 +1,118 @@
 <template>
   <div class="login">
-    <!-- 使用elementUI组件 el-card -->
-    <el-card class="login-card">
-      <!-- 匿名插槽 -->
-      <div class="title">
-        <img src="../../assets/img/logo_index.png" alt />
+    <!-- 放置一个el-card组件 -->
+    <el-card class='login-card'>
+      <!-- 放置标题图片 -->
+      <div class='title'>
+        <img src="../../assets/img/logo_index.png" alt="">
       </div>
-      <!-- 表单 => el-form包裹 -->
-      <!-- 数据校验 => el-form绑定 model ,绑定rules规则  ref可以作用在div上如果ref作用在组件标签上 代表的是组件的实例-->
-      <el-form ref="myForm" :model="loginForm" :rules="loginRules" style="margin-top:20px">
-        <!-- 每一个表单域由一个 Form-Item 组件构成 -->
-        <!-- form-item  prop属性 绑定 下面表单组件的 字段名 -->
+      <!-- 放置表单  el-form model  绑定数据对象 -->
+      <el-form ref="myForm" :model="loginForm" :rules="loginRules">
+        <!-- 表单域 里面  prop要写要检验的字段名  放置 input/select/checkbox 相当于一行-->
         <el-form-item prop="mobile">
-          <!-- 表单域中可以放置各种类型的表单控件，包括 Input、Select、Checkbox、Radio、Switch、DatePicker、TimePicker -->
-          <!-- 手机号 绑定 v-model -->
-          <el-input v-model="loginForm.mobile" placeholder="请输入手机号"></el-input>
+           <el-input v-model="loginForm.mobile" placeholder="请输入手机号"></el-input>
         </el-form-item>
+        <!-- 表单域 -->
         <el-form-item prop="code">
-          <!-- 验证码 -->
-          <el-input v-model="loginForm.code" placeholder="请输入验证码" style="width:65%"></el-input>
-          <!-- 发送验证码 -->
-          <el-button style="float:right">发送验证码</el-button>
+          <el-input v-model="loginForm.code" style="width:65%" placeholder="验证码"></el-input>
+            <el-button style="float:right" plain>发送验证码</el-button>
         </el-form-item>
-        <el-form-item prop="agree">
-          <!-- 同意选项 -->
-          <el-checkbox v-model="loginForm.agree">我已阅读并同意用户协议和隐私条款</el-checkbox>
+        <el-form-item prop="check">
+          <!-- 复选框 -->
+          <el-checkbox v-model="loginForm.check">我已阅读并同意用户协议和隐私条款</el-checkbox>
         </el-form-item>
         <el-form-item>
-          <!-- 登录按钮 -->
-          <!-- 注册点击事件 -->
-          <el-button @click="login" type="primary" style="width:100%">登录</el-button>
+          <el-button @click="submitLogin" type="primary" style="width:100%">登录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
   </div>
-  <!-- 456 -->
-  <!-- <router-view>456</router-view> -->
 </template>
 
 <script>
 export default {
   data () {
-    // 自定义函数
-    let validator = function (rule, value, callBack) {
-      // rule当前规则
-      // value当前表单项的值
-      // callback 回调函数
-      // 正常写法
-    //   if (value) {
-    //     // 正确 勾选了协议
-    //     callBack() // 一切OK请继续
-    //   } else {
-    //     // 不对 没勾选协议
-    //     callBack(new Error('您必须同意无条件被我们蒙骗'))
-    //   }
-      value ? callBack() : callBack(new Error('您必须同意无条件被我们蒙骗')) // 炫技模式
-    }
     return {
-      // 表单数据 是一个对象
       loginForm: {
         mobile: '', // 手机号
         code: '', // 验证码
-        agree: false // 是否同意协议
+        check: false // 是否勾选 同意被坑
       },
       loginRules: {
-        //   决定着校验规则  key(字段名):value(对象数组) => 一个对象就是一个校验规则
-        // required 为true 就表示该字段必填 如果不填 就会提示消息
-        mobile: [{ required: true, message: '请输入您的手机号' },
-          { pattern: /^1[3456789]\d{9}$/, message: '请输入合法的手机号' }],
-        code: [{ required: true, message: '请输入您的验证码' },
-          { pattern: /^\d{6}$/, message: '验证码为6位数字' }],
-        // 自定义函数:3个参数
-        agree: [{ validator }]
-      } // 登录规则集合对象
-      // 自定义形式去校验
+        // 验证规则对象 key(字段名):value(规则 => [])
+        mobile: [{ required: true, message: '请输入您的手机号' }, {
+          pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确'
+        }],
+        code: [{ required: true, message: '请输入你的验证码' }, {
+          pattern: /^\d{6}$/, message: '验证码格式不正确'
+        }],
+        check: [{ validator: function (rule, value, callback) {
+          // 自定义校验函数
+          // rule 规则 没啥用
+          // value 要校验的字段的值
+          // callback 是一个回调函数
+          if (value) {
+            // 认为已经勾选
+            callback() // 认为当前的规则校验通过了
+          } else {
+            // 认为没有勾选
+            callback(new Error('您应该同意我们的霸王条款,让我们欺负你')) // 如果没有勾选 认为当前校验失败 应该停止
+          }
+        } }]
+
+      }
     }
   },
   methods: {
-    login () {
-      // 校验整个表单的规则
-      // validate 是一个方法 => 方法中传入的一个函数 两个校验参数  是否校验成功/未校验成功的字段
+    submitLogin () {
+    //  手动校验
       this.$refs.myForm.validate((isOK) => {
         if (isOK) {
-          console.log('校验成功')
-          alert('登录成功')
-          this.axios({
-            url: '/authorizations',
-            method: 'post',
-            data: this.loginForm
+          //  说明校验通过  应该调用登录接口
+          // axios  body参数 get参数地址参数 路由参数  查询参数
+          // body参数 axios  data
+          // get参数  axios params
+          this.$axios({
+            url: '/authorizations', // 请求地址 axios 没有指定 类型 默认走get类型
+            method: 'post', // 类型
+            data: this.loginForm // body 参数
           }).then(result => {
-            console.log(result.data.data.token)
-            // 放到前端的缓存中
-            window.localStorage.setItem('user-token', result.data.data.token)
-            // 编程式导航
-            this.$router.push('/home') // 登录成功 跳转到home页
+            // 只接受正确结果
+            // 登录后退出  无法再次登录的bug  问题出现原因是  原来使用result.data.data才可获得的数据现在因为使用了响应拦截只需要使用result.data.token既可以获取到token
+            // 前端缓存 登录成功返回给我们的令牌  在响应拦截器中对数据统一进行了预处理把result换成了result.data简化了一层数据
+            window.localStorage.setItem('user-token', result.data.token)
+            this.$router.push('/home') // 跳转到home页
           }).catch(() => {
             this.$message({
-              message: '手机号或者验证码错误',
-              type: 'warning'
+              type: 'warning',
+              message: '手机号或者验证码错误!'
             })
           })
         }
       })
     }
   }
-
 }
 </script>
 
 <style lang='less' scoped>
-.login {
-  background-image: url("../../assets/img/login_bg.jpg");
-  height: 100vh;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .login-card {
-    width: 440px;
-    height: 340px;
-    .title {
-      text-align: center;
-      img {
-        height: 45px;
+  .login  {
+    background-image: url('./../../assets/img/login_bg.jpg');
+    height: 100vh;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .login-card {
+      width: 440px;
+      height: 350px;
+      .title {
+        text-align: center;
+        margin-bottom: 30px;
+        img {
+          height: 45px;
+        }
       }
     }
   }
-}
 </style>
