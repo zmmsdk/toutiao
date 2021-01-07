@@ -2,20 +2,20 @@
 pipeline {
    agent any
        tools {
-        nodejs 'NodeJS 11.5.0'
+        nodejs 'NodeJS 15.5.1'
         // gradle "gradle"
     }
     // 指定一个小时的全局执行超时，之后Jenkins将中止Pipeline运行
-    options {
-        timeout(time: 1, unit: 'HOURS') 
-    }
+    // options {
+    //     timeout(time: 1, unit: 'HOURS') 
+    // }
     // environment { 
     //     CC = 'clang'
     // }
 //定期检查开发代码自动触发更新，工作日每晚4点做daily build
-    triggers {
-        pollSCM('H 4 * * 1-5')
-    }
+    // triggers {
+    //     pollSCM('H 4 * * 1-5')
+    // }
     stages {
         // stage('Checkout') {
         //     steps {
@@ -46,7 +46,7 @@ pipeline {
         }   
         stage('Test') {
             steps {
-                echo 'env.BRANCH_NAME'
+                // echo 'env.BRANCH_NAME'
                 echo 'Testing'
                 // sh 'mvn clean verify sonar:sonar' # 此处可以使用mvn test替代，笔者这步是检测代码的质量同步到自己的代码质量检测平台。
             }
