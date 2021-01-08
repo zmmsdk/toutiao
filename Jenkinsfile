@@ -64,9 +64,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying'
-                sh 'docker login -u admin -P Harbor12345 http://39.101.135.227:85'      
+                // sh 'docker login -u admin -P Harbor12345 http://39.101.135.227:85'      
 
-                   echo 'Harbor登录成功'
+                //    echo 'Harbor登录成功'
 
                 // sh 'docker tag goharbor/nginx-photon:v1.9.2 http://39.101.135.227:85/harbor/nginx:latest'
                 // sh 'docker push 39.101.135.227:85/harbor/nginx:latest'
