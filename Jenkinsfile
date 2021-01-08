@@ -1,10 +1,14 @@
-// #!groovy
+//  #!groovy
 
 def label = "jenkins-nginx"
-podTemplate(label: label, cloud: 'kubernetes')
-{
-node(label) {
-    agent any
+
+
+
+
+
+
+pipeline {
+   agent any
        tools {
         nodejs 'NodeJS 15.5.1'
         // gradle "gradle"
@@ -25,6 +29,13 @@ node(label) {
         HARBOR_USER_PSW='Harbor12345'
 
     }
+//定期检查开发代码自动触发更新，工作日每晚4点做daily build
+    // triggers {
+    //     pollSCM('H 4 * * 1-5')
+    // }
+    podTemplate(label: label, cloud: 'kubernetes')
+{
+node(label) {
         stage('pull code') {
             echo "拉取代码"
         }
@@ -34,20 +45,7 @@ node(label) {
         stage('SonarQube') {
             echo "质量扫描"
         }
-         stages {
-        // stage('Checkout') {
-        //     steps {
-        //         echo 'Checkout'
-        //         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '500378f5-a6e4-4255-984e-61537fe0e455', url: 'git@gitlab.aniu.so:aniu-yunwei/game-of-life.git']]])
-        //     }
-        // }        
-        // stage('Build') {
-        //     steps {
-        //         echo 'Building'
-        //         // sh 'mvn clean install' # 可以用自己的 mvn clean deploy + 参数替代
-        //     }
-        // }
-          stage('Linting') {
+        stage('Linting') {
             steps {
                script {
                 sh 'npm config set registry https://registry.npm.taobao.org' 
@@ -73,9 +71,9 @@ node(label) {
         stage('Deploy') {
             steps {
                 echo 'Deploying'
-                // sh 'docker login -u admin -P Harbor12345 http://39.101.135.227:85'      
+                sh 'docker login -u admin -P Harbor12345 http://39.101.135.227:85'      
 
-                //    echo 'Harbor登录成功'
+                   echo 'Harbor登录成功'
 
                 // sh 'docker tag goharbor/nginx-photon:v1.9.2 http://39.101.135.227:85/harbor/nginx:latest'
                 // sh 'docker push 39.101.135.227:85/harbor/nginx:latest'
@@ -83,10 +81,6 @@ node(label) {
             }
         }
     }
-    }
 }
-
-
-
-
-
+   
+}
