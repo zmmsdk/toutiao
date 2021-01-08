@@ -17,6 +17,9 @@ pipeline {
         // QA_EMAIL='*****@*****.com'
         //接口测试（网络层）的job名，一般由测试人员编写
         // ITEST_JOBNAME='Guahao_InterfaceTest_ExpertPatient'
+        HARBOR_USER_USR='admin'
+        HARBOR_USER_PSW='Harbor12345'
+
     }
 //定期检查开发代码自动触发更新，工作日每晚4点做daily build
     // triggers {
