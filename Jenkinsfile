@@ -4,6 +4,7 @@ pipeline {
 
        tools {
         nodejs 'NodeJS 15.5.1'
+        gradle "gradle"
      
         // gradle "gradle"
     }
