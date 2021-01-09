@@ -4,6 +4,7 @@ pipeline {
 
        tools {
         nodejs 'NodeJS 15.5.1'
+     
         // gradle "gradle"
     }
     // 指定一个小时的全局执行超时，之后Jenkins将中止Pipeline运行
@@ -43,6 +44,22 @@ pipeline {
         //         // sh 'mvn clean install' # 可以用自己的 mvn clean deploy + 参数替代
         //     }
         // }
+        stage('init') {
+           steps {
+            script{
+              def dockerPath = tool 'docker' //全局配置里的docker
+              env.PATH = "${dockerPath}/bin:${env.PATH}" //添加了系统环境变量上
+            }
+           }
+    }
+
+    stage('Build') {
+        steps {
+            script{
+              sh "docker --version"
+            }
+        }
+    }
           stage('Linting') {
             steps {
                script {
