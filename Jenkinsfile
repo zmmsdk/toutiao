@@ -89,7 +89,7 @@ pipeline {
         stage('Build and Push') {
             steps {
                 echo 'Deploying'
-                sh 'docker login -u admin -P Harbor12345 http://39.101.135.227:85'      
+                sh 'docker login -u admin -p Harbor12345 http://39.101.135.227:85'      
 
                    echo 'Harbor登录成功'
 
