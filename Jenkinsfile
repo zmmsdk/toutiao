@@ -79,7 +79,7 @@ pipeline {
         stage('Test') {
             steps {
                 // echo 'env.BRANCH_NAME'
-               sh 'docker version'
+         
                 echo 'Testing'
            
                 // sh 'mvn clean verify sonar:sonar' # 此处可以使用mvn test替代，笔者这步是检测代码的质量同步到自己的代码质量检测平台。
