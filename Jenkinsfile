@@ -89,19 +89,19 @@ pipeline {
         stage('Build and Push') {
             steps {
                 echo 'Deploying'
-                // sh 'docker login -u admin -P Harbor12345 http://39.101.135.227:85'      
+                sh 'docker login -u admin -P Harbor12345 http://39.101.135.227:85'      
 
-                //    echo 'Harbor登录成功'
+                   echo 'Harbor登录成功'
 
-                // sh 'docker tag goharbor/nginx-photon:v1.9.2 http://39.101.135.227:85/harbor/nginx:latest'
-                // sh 'docker push 39.101.135.227:85/harbor/nginx:latest'
+                sh 'docker tag goharbor/nginx-photon:v1.9.2 http://39.101.135.227:85/harbor/nginx:latest'
+                sh 'docker push 39.101.135.227:85/harbor/nginx:latest'
                 // sh 'mvn clean deploy'  # 此处调用脚本或者ansible、saltstak，部署到远程
 
 
                 
             }
             
-        // }
+        }
         // stage('Deploy') {
         //     when { 
         //         allOf {
