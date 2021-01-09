@@ -1,8 +1,6 @@
 // #!groovy
 pipeline {
-  agent {
-        label 'jenkins-nginx'
-    }
+  agent any
 
        tools {
         nodejs 'NodeJS 15.5.1'
