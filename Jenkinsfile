@@ -102,7 +102,7 @@ pipeline {
                 // sh 'docker login -u admin -p Harbor12345 https://39.101.135.227:85/v2/'      
 
                 // echo 'Harbor登录成功'
-                sh 'docker build ./Dockerfile'
+                sh 'docker build Dockerfile'
                 // sh 'docker tag goharbor/nginx-photon:v1.9.2 http://39.101.135.227:85/harbor/nginx:latest'
                 // sh 'docker push 39.101.135.227:85/harbor/nginx:latest'
                 // sh 'mvn clean deploy'  # 此处调用脚本或者ansible、saltstak，部署到远程
