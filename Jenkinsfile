@@ -1,8 +1,13 @@
 // //构建版本的名称
-// def tag = "v1"
-// //Harbor私服地址
-// def harbor_url = "39.101.135.227:85"
 
+//构建版本的名称
+def tag = "latest"
+//Harbor私服地址
+def harbor_url = "39.101.135.227:85"
+// 镜像库项目名称
+def harbor_project = "eureka-security-server"
+// harbor的登录凭证ID
+def harbor_auth = "e4b5d44b-b933-42a8-9746-44dcc07af3d4"
 // #!groovy
 pipeline {
   agent any
@@ -94,15 +99,26 @@ pipeline {
         stage('Build and Push') {
             steps {
                 echo 'Deploying'
-                sh 'docker login -u admin -p Harbor12345 https://39.101.135.227:85/v2/'      
+                // sh 'docker login -u admin -p Harbor12345 https://39.101.135.227:85/v2/'      
 
-                echo 'Harbor登录成功'
-                sh 'docker build'
+                // echo 'Harbor登录成功'
+                // sh 'docker build'
                 // sh 'docker tag goharbor/nginx-photon:v1.9.2 http://39.101.135.227:85/harbor/nginx:latest'
                 // sh 'docker push 39.101.135.227:85/harbor/nginx:latest'
                 // sh 'mvn clean deploy'  # 此处调用脚本或者ansible、saltstak，部署到远程
 
-
+// 定义镜像名称
+        // def imageName = "${project_name}:${tag}"
+        // 对镜像打上标签
+        // sh "docker tag ${imageName} ${harbor_url}/${harbor_project}/${imageName}"
+        // 把镜像推送到harbor
+        withCredentials([usernamePassword(credentialsId: "${harbor_auth}", passwordVariable: 'password', usernameVariable: 'username')]) {
+            // 登录到harbor
+            sh "docker login -u ${username} -p ${password} ${harbor_url}"
+            // 镜像上传
+            // sh "docker push ${harbor_url}/${harbor_project}/${imageName}"
+            sh "echo 镜像上传成功"
+        }
                 
             }
             
