@@ -1,3 +1,8 @@
+// //构建版本的名称
+// def tag = "v1"
+// //Harbor私服地址
+// def harbor_url = "39.101.135.227:85"
+
 // #!groovy
 pipeline {
   agent any
@@ -85,16 +90,16 @@ pipeline {
                 // sh 'mvn clean verify sonar:sonar' # 此处可以使用mvn test替代，笔者这步是检测代码的质量同步到自己的代码质量检测平台。
             }
         }
-        
+             
         stage('Build and Push') {
             steps {
                 echo 'Deploying'
-                sh 'docker login -u admin -p Harbor12345 http://39.101.135.227:85'      
+                sh 'docker login -u admin -p Harbor12345 39.101.135.227:85'      
 
-                   echo 'Harbor登录成功'
-
-                sh 'docker tag goharbor/nginx-photon:v1.9.2 http://39.101.135.227:85/harbor/nginx:latest'
-                sh 'docker push 39.101.135.227:85/harbor/nginx:latest'
+                echo 'Harbor登录成功'
+                sh 'docker build'
+                // sh 'docker tag goharbor/nginx-photon:v1.9.2 http://39.101.135.227:85/harbor/nginx:latest'
+                // sh 'docker push 39.101.135.227:85/harbor/nginx:latest'
                 // sh 'mvn clean deploy'  # 此处调用脚本或者ansible、saltstak，部署到远程
 
 
