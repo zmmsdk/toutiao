@@ -115,7 +115,8 @@ pipeline {
         withCredentials([usernamePassword(credentialsId: "${harbor_auth}", passwordVariable: 'password', usernameVariable: 'username')]) {
             // 登录到harbor
             // sh "docker login -u ${username} -p ${password} ${harbor_url}"
-            sh 'docker login 39.101.135.227:85'
+            sh 'winpty docker login --username=admin 39.101.135.227:85'
+         
             // 镜像上传
             // sh "docker push ${harbor_url}/${harbor_project}/${imageName}"
             sh "echo 镜像上传成功"
