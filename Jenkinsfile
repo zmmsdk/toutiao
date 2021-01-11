@@ -102,25 +102,23 @@ pipeline {
                 // sh 'docker login -u admin -p Harbor12345 https://39.101.135.227:85/v2/'      
 
                 // echo 'Harbor登录成功'
-                sh 'docker build Dockerfile'
+                // sh 'docker build Dockerfile'
                 // sh 'docker tag goharbor/nginx-photon:v1.9.2 http://39.101.135.227:85/harbor/nginx:latest'
                 // sh 'docker push 39.101.135.227:85/harbor/nginx:latest'
                 // sh 'mvn clean deploy'  # 此处调用脚本或者ansible、saltstak，部署到远程
 
 // 定义镜像名称
-        // def imageName = "${project_name}:${tag}"
+//   def imageName = "${project_name}:${tag}"
         // 对镜像打上标签
         // sh "docker tag ${imageName} ${harbor_url}/${harbor_project}/${imageName}"
         // 把镜像推送到harbor
-        // withCredentials([usernamePassword(credentialsId: "${harbor_auth}", passwordVariable: 'password', usernameVariable: 'username')]) {
-        //     // 登录到harbor
-        //     // sh "docker login -u ${username} -p ${password} ${harbor_url}"
-        //     sh 'docker login  39.101.135.227:85'
-         
-        //     // 镜像上传
-        //     // sh "docker push ${harbor_url}/${harbor_project}/${imageName}"
-        //     sh "echo 镜像上传成功"
-        // }
+        withCredentials([usernamePassword(credentialsId: "${harbor_auth}", passwordVariable: 'password', usernameVariable: 'username')]) {
+            // 登录到harbor
+            sh "docker login -u ${username} -p ${password} ${harbor_url}"
+            // 镜像上传
+            // sh "docker push ${harbor_url}/${harbor_project}/${imageName}"
+            sh "echo 镜像上传成功"
+        }
                 
             }
             
