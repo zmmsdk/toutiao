@@ -111,6 +111,8 @@ pipeline {
 //   def imageName = "${project_name}:${tag}"
         // 对镜像打上标签
         // sh "docker tag ${imageName} ${harbor_url}/${harbor_project}/${imageName}"
+         sh 'source /etc/profile'
+         sh 'sudo service jenkins restart'
         // 把镜像推送到harbor
         withCredentials([usernamePassword(credentialsId: "${harbor_auth}", passwordVariable: 'password', usernameVariable: 'username')]) {
             // 登录到harbor
