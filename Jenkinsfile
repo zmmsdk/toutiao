@@ -114,7 +114,7 @@ pipeline {
      
         //  sh 'docker restart'
         // 把镜像推送到harbor
-        withCredentials([usernamePassword(credentialsId: "${e4b5d44b-b933-42a8-9746-44dcc07af3d4}", passwordVariable: 'Harbor12345', usernameVariable: 'admin')]) {
+        withCredentials([usernamePassword(credentialsId: "e4b5d44b-b933-42a8-9746-44dcc07af3d4", passwordVariable: 'Harbor12345', usernameVariable: 'admin')]) {
             // 登录到harbor
             sh "docker login -u admin -p Harbor12345 http://39.101.135.227:85"
             // 镜像上传
