@@ -112,7 +112,7 @@ pipeline {
         // 对镜像打上标签
         // sh "docker tag ${imageName} ${harbor_url}/${harbor_project}/${imageName}"
      
-         sh 'sudo docker restart'
+        //  sh 'docker restart'
         // 把镜像推送到harbor
         withCredentials([usernamePassword(credentialsId: "${harbor_auth}", passwordVariable: 'password', usernameVariable: 'username')]) {
             // 登录到harbor
