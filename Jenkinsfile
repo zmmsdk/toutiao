@@ -10,7 +10,12 @@ def harbor_project = "eureka-security-server"
 def harbor_auth = "e4b5d44b-b933-42a8-9746-44dcc07af3d4"
 // #!groovy
 pipeline {
-  agent any
+agent {
+    node {
+      label 'nginx'
+    }
+
+  }
 
        tools {
         nodejs 'NodeJS 15.5.1'
@@ -86,6 +91,18 @@ pipeline {
                }
             }
         }   
+         stage('Docker Build') {
+    //   steps {
+    //     script {
+    //       container('docker') {
+	// 		sh 'docker login -u ' + HARBOR_CREDS_USR  + ' -p ' + HARBOR_CREDS_PSW + ' ' + HARBOR_HOST
+    //         sh "docker build --build-arg JAR_FILE=`ls workplace/target/*.jar |cut -d '/' -f2` -t " + HARBOR_HOST + "/" + DOCKER_IMAGE + ":" + GIT_TAG + " --no-cache ."
+    //         sh "docker push " + HARBOR_HOST + "/" + DOCKER_IMAGE + ":" + GIT_TAG
+    //         sh "docker rmi " + HARBOR_HOST + "/" + DOCKER_IMAGE + ":" + GIT_TAG
+    //       }
+    //     }
+    //   }
+    }
         stage('Test') {
             steps {
                 // echo 'env.BRANCH_NAME'
@@ -121,7 +138,7 @@ pipeline {
         //     // sh "docker push ${harbor_url}/${harbor_project}/${imageName}"
         //     sh "echo 镜像上传成功"
         // }
-                      sh 'docker login -u admin -p Harbor12345 https://39.101.135.227:85'
+                    //   sh 'docker login -u admin -p Harbor12345 https://39.101.135.227:85'
             }
             
         }
