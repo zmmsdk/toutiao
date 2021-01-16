@@ -10,12 +10,7 @@ def harbor_project = "eureka-security-server"
 def harbor_auth = "e4b5d44b-b933-42a8-9746-44dcc07af3d4"
 // #!groovy
 pipeline {
-agent {
-    node {
-      label 'nginx'
-    }
-
-  }
+  agent any
 
        tools {
         nodejs 'NodeJS 15.5.1'
@@ -91,18 +86,6 @@ agent {
                }
             }
         }   
-         stage('Docker Build') {
-    //   steps {
-    //     script {
-    //       container('docker') {
-	// 		sh 'docker login -u ' + HARBOR_CREDS_USR  + ' -p ' + HARBOR_CREDS_PSW + ' ' + HARBOR_HOST
-    //         sh "docker build --build-arg JAR_FILE=`ls workplace/target/*.jar |cut -d '/' -f2` -t " + HARBOR_HOST + "/" + DOCKER_IMAGE + ":" + GIT_TAG + " --no-cache ."
-    //         sh "docker push " + HARBOR_HOST + "/" + DOCKER_IMAGE + ":" + GIT_TAG
-    //         sh "docker rmi " + HARBOR_HOST + "/" + DOCKER_IMAGE + ":" + GIT_TAG
-    //       }
-    //     }
-    //   }
-    }
         stage('Test') {
             steps {
                 // echo 'env.BRANCH_NAME'
@@ -124,21 +107,7 @@ agent {
                 // sh 'docker push 39.101.135.227:85/harbor/nginx:latest'
                 // sh 'mvn clean deploy'  # 此处调用脚本或者ansible、saltstak，部署到远程
 
-// 定义镜像名称
-//   def imageName = "${project_name}:${tag}"
-        // 对镜像打上标签
-        // sh "docker tag ${imageName} ${harbor_url}/${harbor_project}/${imageName}"
-     
-        //  sh 'docker restart'
-        // 把镜像推送到harbor
-        // withCredentials([usernamePassword(credentialsId: "e4b5d44b-b933-42a8-9746-44dcc07af3d4", passwordVariable: 'Harbor12345', usernameVariable: 'admin')]) {
-        //     // 登录到harbor
-        //     sh "docker login -u admin -p Harbor12345 http://39.101.135.227:85"
-        //     // 镜像上传
-        //     // sh "docker push ${harbor_url}/${harbor_project}/${imageName}"
-        //     sh "echo 镜像上传成功"
-        // }
-                    //   sh 'docker login -u admin -p Harbor12345 https://39.101.135.227:85'
+
             }
             
         }
