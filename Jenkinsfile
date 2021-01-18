@@ -101,8 +101,8 @@ pipeline {
                 echo 'Deploying'
 
 
-                sh "sudo sh -c 'echo DOCKER_OPTS=\"--insecure-registry 39.101.135.227:85\" >> /etc/default/docker'"
-                sh 'sudo service docker restart'
+                sh "sh -c 'echo DOCKER_OPTS=\"--insecure-registry 39.101.135.227:85\" >> /etc/default/docker'"
+                sh 'docker restart'
 
                 echo 'docker 重启成功'
 // docker tag registry:2.3.0 192.168.33.18:5000/library/registry:2.3.0
