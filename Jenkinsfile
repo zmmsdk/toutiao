@@ -11,7 +11,7 @@ def harbor_auth = "e4b5d44b-b933-42a8-9746-44dcc07af3d4"
 // #!groovy
 pipeline {
   agent any
-
+//工具名称必须在Jenkins 管理Jenkins → 全局工具配置中预配置。
        tools {
         nodejs 'NodeJS 15.5.1'
    
@@ -99,7 +99,15 @@ pipeline {
         stage('Build and Push') {
             steps {
                 echo 'Deploying'
-                // sh 'docker login -u admin -p Harbor12345 https://39.101.135.227:85/v2/'      
+
+
+                sh "sudo sh -c 'echo DOCKER_OPTS=\"--insecure-registry 39.101.135.227:85\" >> /etc/default/docker'"
+                sh 'sudo service docker restart'
+
+                echo 'docker 重启成功'
+// docker tag registry:2.3.0 192.168.33.18:5000/library/registry:2.3.0
+// docker push 192.168.33.18:5000/library/registry:2.3.0
+                sh 'docker login -u admin -p Harbor12345 https://39.101.135.227:85'      
 
                 // echo 'Harbor登录成功'
                 // sh 'docker build Dockerfile'
