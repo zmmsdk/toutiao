@@ -101,13 +101,13 @@ pipeline {
                 echo 'Deploying'
 
 
-                sh "sh -c 'echo DOCKER_OPTS=\"--insecure-registry 39.101.135.227:85\" >> /etc/default/docker'"
-                sh 'docker restart'
+                // sh "sh -c 'echo DOCKER_OPTS=\"--insecure-registry 39.101.135.227:85\" >> /etc/default/docker'"
+                // sh 'docker restart'
 
                 echo 'docker 重启成功'
 // docker tag registry:2.3.0 192.168.33.18:5000/library/registry:2.3.0
 // docker push 192.168.33.18:5000/library/registry:2.3.0
-                sh 'docker login -u admin -p Harbor12345 https://39.101.135.227:85'      
+                sh 'docker login  https://39.101.135.227:85'      
 
                 // echo 'Harbor登录成功'
                 // sh 'docker build Dockerfile'
