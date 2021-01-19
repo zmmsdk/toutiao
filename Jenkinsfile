@@ -107,7 +107,7 @@ pipeline {
                 echo 'docker 重启成功'
 // docker tag registry:2.3.0 192.168.33.18:5000/library/registry:2.3.0
 // docker push 192.168.33.18:5000/library/registry:2.3.0
-                sh 'docker login  https://172.26.111.246:85'      
+                sh 'docker login  http://172.26.111.246:85'      
 
                 // echo 'Harbor登录成功'
                 // sh 'docker build Dockerfile'
