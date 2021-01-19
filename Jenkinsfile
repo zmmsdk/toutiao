@@ -115,7 +115,7 @@ pipeline {
                 // sh 'docker push 39.101.135.227:85/harbor/nginx:latest'
                 // sh 'mvn clean deploy'  # 此处调用脚本或者ansible、saltstak，部署到远程
 
-                 sh 'kubectl create -f ./dev-pod.Yaml'
+                //  sh 'kubectl create -f ./dev-pod.Yaml'
             }
             
         }
