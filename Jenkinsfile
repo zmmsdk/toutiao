@@ -107,12 +107,12 @@ pipeline {
                 echo 'docker 重启成功'
 // docker tag registry:2.3.0 192.168.33.18:5000/library/registry:2.3.0
 // docker push 192.168.33.18:5000/library/registry:2.3.0
-                // sh 'docker login  https://39.101.135.227:85'      
+                sh 'docker login  https://172.26.111.246:85'      
 
                 // echo 'Harbor登录成功'
                 // sh 'docker build Dockerfile'
-                // sh 'docker tag goharbor/nginx-photon:v1.9.2 http://39.101.135.227:85/harbor/nginx:latest'
-                // sh 'docker push 39.101.135.227:85/harbor/nginx:latest'
+                sh 'docker tag goharbor/nginx-photon:v1.9.2 http://172.26.111.246:85/harbor/nginx:latest'
+                sh 'docker push 172.26.111.246:85/harbor/nginx:latest'
                 // sh 'mvn clean deploy'  # 此处调用脚本或者ansible、saltstak，部署到远程
 
                 //  sh 'kubectl create -f ./dev-pod.Yaml'
